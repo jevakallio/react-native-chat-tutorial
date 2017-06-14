@@ -175,7 +175,7 @@ Then, in **App.js** add the following lines after the react-native imports:
 ```js
 import {send, subscribe} from 'react-native-training-chat-server';
 
-const NAME = 'jevakallio';
+const NAME = 'Your Name';
 const CHANNEL = 'Reactivate';
 ```
 
@@ -191,7 +191,7 @@ export default class App extends React.Component {
     messages: [],
   };
 
-  componentWillMount() {
+  componentDidMount() {
     subscribe(CHANNEL, messages => {
       this.setState({messages});
     });
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
 ```
 Feel free to play around with the styles and make it look different. The style names and values usually match how CSS works on the web, except names are written using camel casing, e.g `backgroundColor` rather than `background-color`.
 
-## Checkpoint 1
+## Checkpoint
 
 At this point, you should see a styled list of messages. There is no one right way to achieve this, but this is how my App.js looks like:
 
@@ -345,9 +345,9 @@ const styles = StyleSheet.create({
 
 ## Step 5. Typing up messages
 
-Next, we'll allow the user to send messages. We already have access to the `send` method of the chat server, we'll just need a text input where the user can typd, and a "Send" button the user can press to send the typed message.
+Next, we'll allow the user to send messages. We already have access to the `send` method of the chat server, we'll just need a text input where the user can type, and a "Send" button the user can press to send the typed message.
 
-Start by importing the `TextInput` primitive from `react-native`:
+Start by importing the [TextInput](https://facebook.github.io/react-native/docs/textinput.html) primitive from `react-native`:
 ```diff
 - import {StyleSheet, Text, View, FlatList} from 'react-native';
 + import {StyleSheet, Text, View, FlatList, TextInput} from 'react-native';
@@ -380,7 +380,7 @@ Again, there's a lot to unpack here. One by one:
 3. This update is done in the TextInput's `onChangeText` callback: When the input text is changed by the user, we replace the `typing` state variable with the new text in order to update the input value. This pattern of listening of change events and then feeding the same value back to the component is called "Controlled component" - read about [Handling text input](https://facebook.github.io/react-native/docs/handling-text-input.html) in React Native to learn more.
 4. The rest of the TextInput props are presentational. There are [many more props](https://facebook.github.io/react-native/docs/textinput.html) we could give here to control properties like on-screen keyboard type, autocorrect, autofocus etc.
 
-We don't yet see anything on the screen. That is because the text input needs styling and dimensions. Add the missing `footer` and `input` style declarations into the StyleSheet:
+We don't yet see anything on the screen. That is because the text input needs styling and dimensions. Add the missing `footer` and `input` style declarations into the StyleSheet at the bottom of the file:
 ```js
   footer: {
     flexDirection: 'row',
@@ -402,7 +402,7 @@ Import it from react-native:
 + import {StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView} from 'react-native';
 ```
 
-And wrap it around our footer View:
+And wrap it around our footer View, giving it a `behavior` prop value of "padding":
 ```diff
 + <KeyboardAvoidingView behavior="padding">
   <View style={styles.footer}>
@@ -444,13 +444,12 @@ async sendMessage() {
 This function looks slightly different that our other methods because of the `async` keyword that precedes the method name. In the middle of the function, you see another keyword `await`. These are part of the ES7 `async/await` feature, which makes it easier to deal with asynchronous code where you would normally have used Promises. For the purposes of this tutorial, going deeper into async/await is not important, but they are very useful and worth [learning more about](https://ponyfoo.com/articles/understanding-javascript-async-await).
 
 We then need a Send button to call our `sendMessage` method. Let's start (you know the drill by now) by importing one more primitive from react-native, this time `TouchableOpacity`:
-```
 ```diff
 - import {StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView} from 'react-native';
 + import {StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 ```
 
-TouchableOpacity, and its cousins TouchableHighlight, TouchableWithoutFeedback and TouchableNativeFeedback are the primitive components we can use to compose buttons and other elements with simple press interactions.
+[TouchableOpacity](https://facebook.github.io/react-native/docs/touchableopacity.html), and its cousins TouchableHighlight, TouchableWithoutFeedback and TouchableNativeFeedback are the primitive components we can use to compose buttons and other elements with simple press interactions.
 
 Let's put that inside our footer `View`, on the next line immediately after the `<TextInput />` element:
 ```jsx
@@ -470,7 +469,7 @@ And of course, we'll style the button by adding a "send" style key to the StyleS
   },
 ```
 
-## Step 7: Anchor the list to the bottom
+## Step 7: Anchor the list scroll position to the bottom
 
 You probably noticed that the message list starts from the top of the screen and you
 need to scroll to the bottom to see the last messages. Unfortunately the React Native
@@ -500,11 +499,13 @@ This example shows how powerful the React Native third-party ecosystem is. Anybo
 
 ## Step 8: Add a header
 
-We now have a fully functioning chat app! In fact, you could go ahead and [publish it to the Expo store](#publish-it) right now.
+We now have a fully functioning chat app! In fact, you could go ahead and [publish it to the Expo store](#publish-your-app) right now.
 
-But it doesn't look very nice yet. Let's add a header component and a bit of color. We could just keep editing `App.js`, but the file is already getting quite big, and a header feels like a good, isolated component to split out to it's own file.
+But it doesn't look very nice yet. Let's add a header component and a bit of color. 
 
-Let's start by creating a new file, `Header.js` in our app's root directory. Copy the following component boilerplate into that file.
+We could just keep editing `App.js`, but the file is already getting quite big, and a header feels like a good, isolated component to split out to it's own file.
+
+Let's start by creating a new file, `Header.js` in our app's root directory. Copy the following component into that file.
 ```js
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
@@ -538,7 +539,6 @@ const styles = StyleSheet.create({
 ```
 
 Those are the styles I used, but feel free to play around it with it and make it look like you!
-```
 
 Because we `export` the Header component, it means we can `import` it in our main file. On top of the `App.js`, after the other import statements, add a relative import like so:
 
@@ -555,7 +555,7 @@ Then you can just drop in the Header component above the list and pass the chann
         <ReversedFlatList data={this.state.messages} renderItem={this.renderItem} />
 ```
 
-Speaking of [Props](https://facebook.github.io/react-native/docs/props.html), we briefly touched on them earlier, but this is the first time we are using it in our own components.
+Speaking of [Props](https://facebook.github.io/react-native/docs/props.html), we briefly touched on them earlier, but this is the first time we are using them in our own components.
 
 In our `App` component we have been using `this.state`. You can think of [State](https://facebook.github.io/react-native/docs/state.html) as the private data that a component itself owns and manages. Contrast this with `this.props`, which are passed as attributes, can be accessed by the component, but a **component can never modify its own props**. Think of them like function arguments.
 
@@ -683,6 +683,10 @@ In a real app you'll probably want to change the channel. How to do this is left
 - In the `send` function, detect if message is of format "/channel NewChannel", and instead of sending the message to the current chat, extract the channel name from the message.
 - To change the channel title in the header, move the channel name to App component state instead of using the hardcoded `CHANNEL`.
 
+## Steps 11-99
+
+Now you have a basis for a simple app, but of course it has some limitations, such as a hard-coded username. Experiment with different React Native components (see: [Resources](#resources)) to add more functionality. Sky's the limit!
+
 # Publish your app!
 
 Because we've built the app on Expo, you can distribute the app via Expo's `exp` CLI. Let's install that globally on your machine and sign up:
@@ -701,6 +705,24 @@ exp publish
 ```
 
 If all went well, you should now have a link you can open on your phone and share with anyone (although given that we haven't implemented username selection, all users will appear as you! 😜)
+
+
+# Summary
+Building this small app, we've covered a lot of ground. We...
+- Learned how to create a new app with Create React Native App (CRNA)
+- Learned how to set up a live-reloading development environment with Expo
+- Learned about the anatomy of a React Native module
+- Learned about native primitives like Views, Texts, Images and more
+- Learned how to style and layout our components with the CSS-like Flexbox implementation
+- Learned how to gather user input with TextInput
+- Learned how to work with the device keyboard with KeyboardAvoidingView
+- Learned how to use async/await to perform asynchronous API calls
+- Learned about the power of third-party Components and how to use them in your app
+- Learned how to split your app into multiple components
+- Learned how to use component State and Props
+- Learned how to publish an app to the Expo store
+
+Of course, we didn't learn them very deeply. You now have an idea on how to build a simple app in React Native, but the learning only starts here!
 
 # Resources
 Useful resources:
