@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import ReversedFlatList from 'react-native-reversed-flat-list';
 import {send, subscribe} from 'react-native-training-chat-server';
-
 const NAME = 'Your name';
 const CHANNEL = 'Reactivate';
 
@@ -54,7 +54,10 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <FlatList data={this.state.messages} renderItem={this.renderItem} />
+        <ReversedFlatList
+          data={this.state.messages}
+          renderItem={this.renderItem}
+        />
 
         <KeyboardAvoidingView behavior="padding">
           <View style={styles.footer}>

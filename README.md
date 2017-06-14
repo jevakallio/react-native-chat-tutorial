@@ -415,16 +415,13 @@ Now that we can collect user input, we'll want to send it to our server. Let's d
 
 ```js
 async sendMessage() {
-  // read message from component state
-  const message = this.state.typing;
-
   // send message to our channel, with sender name.
   // the `await` keyword means this function execution
   // waits until the message is sent
   await send({
     channel: CHANNEL,
     sender: NAME,
-    message,
+    message: this.state.typing
   });
 
   // set the component state (clears text input)
@@ -434,7 +431,7 @@ async sendMessage() {
 }
 ```
 
-This function looks slightly different that our other methods because of the `async` keyword that precedes the method name. In the middle of the function, you see another keyword `await`. These are part of the ES7 `async/await` functionality, which makes it easier to deal with asynchronous code where you would normally have used Promises. For the purposes of this tutorial, going deeper into async/await is not important, but they are very useful and worth [learning more about](https://ponyfoo.com/articles/understanding-javascript-async-await).
+This function looks slightly different that our other methods because of the `async` keyword that precedes the method name. In the middle of the function, you see another keyword `await`. These are part of the ES7 `async/await` feature, which makes it easier to deal with asynchronous code where you would normally have used Promises. For the purposes of this tutorial, going deeper into async/await is not important, but they are very useful and worth [learning more about](https://ponyfoo.com/articles/understanding-javascript-async-await).
 
 We then need a Send button to call our `sendMessage` method. Let's start (you know the drill by now) by importing one more primitive from react-native, this time `TouchableOpacity`:
 ```
@@ -462,3 +459,30 @@ And of course, we'll style the button by adding a "send" style key to the StyleS
     padding: 20,
   },
 ```
+
+## Step 7: Anchor the list to the bottom
+
+You probably noticed that the message list starts from the top of the screen and you
+need to scroll to the bottom to see the last messages. Unfortunately the React Native
+FlatList does not offer a "reversed" option - but no worries, there are a third-party
+alternatives.
+
+In this case we can use the `react-native-reversed-flat-list` module. Let's install it
+from NPM by running the following command in the project root directory:
+```sh
+npm install --save react-native-reversed-flat-list
+```
+
+Then we can import it on the top of the file:
+```diff
+import React from 'react';
+import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
++ import ReversedFlatList from 'react-native-reversed-flat-list';
+```
+
+The nice thing about ReversedFlatList is that it's (mostly) a drop-in replacement for the normal FlatList. In our `render` method, we can just replace one component with another:
+```diff
+- <FlatList data={this.state.messages} renderItem={this.renderItem} />
++ <ReversedFlatList data={this.state.messages} renderItem={this.renderItem} />
+
+This example shows how powerful the React Native third-party ecosystem is. Anybody can write a component, publish it to npm, and other developers can drop them into their apps. You can find good components by googling, or browsing component galleries such as [React Parts](https://react.parts/native)
