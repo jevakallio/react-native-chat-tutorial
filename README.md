@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
 
 The same in CSS would look something like this:
 ```CSS
-.container: {
+.container {
   display: flex;
   flex: 1;
   background-color: #fff;
