@@ -1,15 +1,17 @@
 React Native Chat App
 ===
+_A step-by-step tutorial to create your own Chat app with React Native_
 
-See [App.js](App.js) for the ready app source code, or try it out on Expo:
-https://exp.host/@jevakallio/reactnativechatdemo
-
-**At the Reactivate training? 👋 Jump to [Let's code!](#lets-code)**
-
-- [Introduction](#introduction) - Start here to learn how to use Create React Native App
-- [Code walkthrough](#code-walkthrough) - Start here if you have created a new Create React Native app but aren't yet familiar with React, ES6 and JSX
-- [Let's code!](#lets-code) - Start here if you understand the basics of React and want to get hacking.
-- [Publish your app!](#publish-your-app) - When you're happy with your app, publish it to Expo.
+- **At the Reactivate training? 👋 Jump to [Let's code!](#lets-code)**
+- See [App.js](App.js) for the ready app source code
+- Try the app on [Expo](https://exp.host/@jevakallio/reactnativechatdemo)
+- Table of Contents
+  - [Introduction](#introduction) - Start here to learn how to use Create React Native App
+  - [Code walkthrough](#code-walkthrough) - Start here if you have created a new Create React Native app but aren't yet familiar with React, ES6 and JSX
+  - [Let's code!](#lets-code) - Start here if you understand the basics of React and want to get hacking.
+  - [Publish your app!](#publish-your-app) - When you're happy with your app, publish it to Expo.
+  
+<img src="http://i.imgur.com/KTWAlg4.png" width="300" />
 
 # Introduction
 
