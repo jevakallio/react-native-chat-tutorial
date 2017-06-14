@@ -484,5 +484,122 @@ The nice thing about ReversedFlatList is that it's (mostly) a drop-in replacemen
 ```diff
 - <FlatList data={this.state.messages} renderItem={this.renderItem} />
 + <ReversedFlatList data={this.state.messages} renderItem={this.renderItem} />
+```
 
 This example shows how powerful the React Native third-party ecosystem is. Anybody can write a component, publish it to npm, and other developers can drop them into their apps. You can find good components by googling, or browsing component galleries such as [React Parts](https://react.parts/native)
+
+## Step 8: Add a header
+
+We now have a fully functioning chat app! In fact, you could go ahead and [publish it to the Expo store](#publish-it) right now.
+
+But it doesn't look very nice yet. Let's add a header component and a bit of color. We could just keep editing `App.js`, but the file is already getting quite big, and a header feels like a good, isolated component to split out to it's own file.
+
+Let's start by creating a new file, `Header.js` in our app's root directory. Copy the following component boilerplate into that file.
+```js
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+
+export default class Header extends React.Component {
+  render() {
+    return (
+      <View style={styles.header}>
+        <Text style={styles.title}>
+          #{this.props.title}
+        </Text>
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  header: {
+    height: 80,
+    backgroundColor: 'lightseagreen',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: 10,
+  },
+  title: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 24,
+  },
+});
+```
+
+Those are the styles I used, but feel free to play around it with it and make it look like you!
+```
+
+Because we `export` the Header component, it means we can `import` it in our main file. On top of the `App.js`, after the other import statements, add a relative import like so:
+
+```js
+import Header from './Header';
+```
+
+Then you can just drop in the Header component above the list and pass the channel name as the `title` prop. You should now see a Header on the screen!
+```diff  
+  render() {
+    return (
+      <View style={styles.container}>
++        <Header title={CHANNEL} />
+        <ReversedFlatList data={this.state.messages} renderItem={this.renderItem} />
+```
+
+Speaking of [Props](https://facebook.github.io/react-native/docs/props.html), we briefly touched on them earlier, but this is the first time we are using it in our own components.
+
+In our `App` component we have been using `this.state`. You can think of [State](https://facebook.github.io/react-native/docs/state.html) as the private data that a component itself owns and manages. Contrast this with `this.props`, which are passed as attributes, can be accessed by the component, but a **component can never modify its own props**. Think of them like function arguments.
+
+```js
+  <Text style={styles.title}>
+    #{this.props.title}
+  </Text>
+```
+
+_(Notice the `#{...}` expression? This is in fact not a React or JSX feature, it's just a hashtag followed by a regular curly brace `{}` expression and the hashtag is displayed on the screen 😁)_
+
+#### Aside: Components, Components, Components
+
+If you squint a little, you'll see that this component's code looks a lot like our App component! If you haven't used React, it may surprise you that an entire app, and a small header component within it are equivalent concepts.
+
+That's the cool thing about React: It allows you to compose apps from smaller pieces, and even larger apps from smaller mini-apps, if you so wish! In a "real" app, you would probably split the chat UI into smaller, semantically named components. Instead of Texts, Views, TextInput, TouchableOpacities, StyleSheets etc, the main `App` component might looks like something like this!
+
+```jsx
+<Screen>
+  <Header title={CHANNEL} />
+  <MessageList data={this.state.messages} />
+  <Composer value={this.state.typing} onSend={this.send} />
+</Screen>
+```
+
+This makes our app code really easy to read and modify!
+
+
+## Step 8: Customize device status bar
+
+Depending on what colors you chose for you header, and what kind of device you are on, there's a chance the phone's status bar is not clearly visible on top of the header. Whether or not this is the case on your phone, it might be of some of your other users. To account for all possible devices, it's best practice to explicitly declare the status bar color for your app.
+
+We can do that easily in the `Header.js` file using the [StatusBar](https://facebook.github.io/react-native/docs/statusbar.html) component:
+```diff
+-import {View, Text, StyleSheet} from 'react-native';
++import {View, Text, StyleSheet, StatusBar} from 'react-native';
+```
+
+And dropping that into the our component's `render` method:
+```diff
+<View style={styles.header}>
++  <StatusBar backgroundColor="lightseagreen" barStyle="light-content" />
+  <Text style={styles.title}>
+    #{this.props.title}
+  </Text>
+</View>
+```
+
+The `backgroundColor` prop only affects Android devices - here we set it to the same color as our header. The `barStyle` works on both platforms, prop has one of three values:
+- "default" - the platform default style
+- "light-content" - light text, useful for dark backgrounds
+- "dark-content" - dark text, useful for light backgrounds
+
+(Some Android variants don't allow customizing the status bar, therefore this might have no effect.)
+
+
+# Publish it!

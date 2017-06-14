@@ -3,19 +3,23 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  StatusBar,
+  FlatList,
 } from 'react-native';
+
 import ReversedFlatList from 'react-native-reversed-flat-list';
+
 import {send, subscribe} from 'react-native-training-chat-server';
-const NAME = 'Your name';
+import Header from './Header';
+
+const NAME = 'Jani';
 const CHANNEL = 'Reactivate';
 
 export default class App extends React.Component {
   state = {
-    typing: '',
     messages: [],
   };
 
@@ -25,7 +29,7 @@ export default class App extends React.Component {
     });
   }
 
-  sendMessage = async () => {
+  send = async () => {
     // read message from component state
     const message = this.state.typing;
 
@@ -54,11 +58,11 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Header title={CHANNEL} />
         <ReversedFlatList
           data={this.state.messages}
           renderItem={this.renderItem}
         />
-
         <KeyboardAvoidingView behavior="padding">
           <View style={styles.footer}>
             <TextInput
@@ -68,7 +72,7 @@ export default class App extends React.Component {
               placeholder="Type something nice"
               onChangeText={text => this.setState({typing: text})}
             />
-            <TouchableOpacity onPress={this.sendMessage}>
+            <TouchableOpacity onPress={this.send}>
               <Text style={styles.send}>Send</Text>
             </TouchableOpacity>
           </View>
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 20,
-    paddingVertical: 20,
     fontSize: 18,
     flex: 1,
   },
