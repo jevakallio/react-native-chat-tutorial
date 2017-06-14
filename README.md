@@ -453,7 +453,7 @@ We then need a Send button to call our `sendMessage` method. Let's start (you kn
 
 Let's put that inside our footer `View`, on the next line immediately after the `<TextInput />` element:
 ```jsx
-  <TouchableOpacity onPress={this.sendMessage}>
+  <TouchableOpacity onPress={this.sendMessage.bind(this)}>
     <Text style={styles.send}>Send</Text>
   </TouchableOpacity>
 ```
