@@ -620,8 +620,7 @@ the hard-coded configuration section above the App component:
 ```diff
 const NAME = 'Your name';
 const CHANNEL = 'Reactivate';
-+ const AVATAR =
-  'https://pbs.twimg.com/profile_images/806501058679816192/ZHFWIF-z_400x400.jpg';
++const AVATAR = 'https://pbs.twimg.com/profile_images/806501058679816192/ZHFWIF-z_400x400.jpg';
 ```
 
 Then, in the `sendMessage` function add your avatar to the message payload:
