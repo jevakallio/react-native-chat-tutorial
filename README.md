@@ -567,14 +567,14 @@ That's the cool thing about React: It allows you to compose apps from smaller pi
 <Screen>
   <Header title={CHANNEL} />
   <MessageList data={this.state.messages} />
-  <Composer value={this.state.typing} onSend={this.send} />
+  <Composer value={this.state.typing} onSend={this.sendMessage} />
 </Screen>
 ```
 
 This makes our app code really easy to read and modify!
 
 
-## Step 8: Customize device status bar
+## Step 8: Customize device status bar (Optional)
 
 Depending on what colors you chose for you header, and what kind of device you are on, there's a chance the phone's status bar is not clearly visible on top of the header. Whether or not this is the case on your phone, it might be of some of your other users. To account for all possible devices, it's best practice to explicitly declare the status bar color for your app.
 
@@ -600,6 +600,80 @@ The `backgroundColor` prop only affects Android devices - here we set it to the 
 - "dark-content" - dark text, useful for light backgrounds
 
 (Some Android variants don't allow customizing the status bar, therefore this might have no effect.)
+
+## Step 9: Implement avatars (Optional)
+
+It might nice to have avatars! In fact, the backend already support avatars, we just haven't been using them.
+
+First, find yourself a profile photo that's hosted somewhere online (for example your Twitter or Facebook profile image), copy the image URL and edit that into
+the hard-coded configuration section above the App component:
+```diff
+const NAME = 'Your name';
+const CHANNEL = 'Reactivate';
++ const AVATAR =
+  'https://pbs.twimg.com/profile_images/806501058679816192/ZHFWIF-z_400x400.jpg';
+```
+
+Then, in the `sendMessage` function add your avatar to the message payload:
+```diff
+await send({
+  channel: CHANNEL,
+  sender: NAME,
++  avatar: AVATAR,
+  message,
+});
+```
+
+That takes care of sending your avatar, but we still need to render the avatars next to each message. For that we can use the Image component:
+
+```diff
+- import {StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView} from 'react-native';
++ import {StyleSheet, Text, View, FlatList, TextInput, KeyboardAvoidingView, Image} from 'react-native';
+```
+
+Remember that the `renderItem` method is responsible for rendering each message. We'll need to add the `Image` element, and add a `View` wrapper around the two Text elements so that we can lay them out nicely:
+```diff
+renderItem({item}) {
+  return (
+    <View style={styles.row}>
++      <Image style={styles.avatar} source={{uri: item.avatar}} />
++      <View style={styles.rowText}>
+        <Text style={styles.sender}>{item.sender}</Text>
+        <Text style={styles.message}>{item.message}</Text>
++      </View>
+    </View>
+  );
+}
+```
+
+We used the `styles.avatar` and `styles.rowText` styles, but we haven't declared them yet. Here's how I did it, but feel free to play with the styles yourself:
+```js
+  avatar: {
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  rowText: {
+    flex: 1,
+  },
+```
+
+Unlike on the web, images loaded from the internet do not get automatically sized. They
+need to be either absolutely sized with width and height, as above, or rendered to fill a container with a flex style. This is because we won't know what the size of the image is before it is downloaded, and we don't want the layout to "jank" when the image arrives and changes the layout around it.
+
+Note that we are using the `borderRadius` prop to create rounded corners for the image. For fully round image, as above, use a `borderRadius` that is half the width and height or the image. For more gently rounded "Twitter-style" corners, try a lower radius.
+
+
+## Step 10: Change channels (Optional)
+
+In a real app you'll probably want to change the channel. How to do this is left as an exercise to the reader, but here are some ideas how you might do it:
+
+- You can call the chat server `subscribe` function with a new channel name, and it will replace the existing subscription and start listening to messages from the new channel.
+- In the `send` function, detect if message is of format "/channel NewChannel", and instead of sending the message to the current chat, extract the channel name from the message.
+- To change the channel title in the header, move the channel name to App component state instead of using the hardcoded `CHANNEL`.
+
+
 
 
 # Publish it!

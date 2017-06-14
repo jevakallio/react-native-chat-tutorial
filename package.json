@@ -24,6 +24,6 @@
     "react": "16.0.0-alpha.6",
     "react-native": "^0.44.0",
     "react-native-reversed-flat-list": "^1.0.1",
-    "react-native-training-chat-server": "^1.0.1"
+    "react-native-training-chat-server": "^1.1.0"
   }
 }
