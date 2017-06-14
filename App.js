@@ -16,10 +16,10 @@ import ReversedFlatList from 'react-native-reversed-flat-list';
 import {send, subscribe} from 'react-native-training-chat-server';
 import Header from './Header';
 
-const NAME = 'Jani';
-const CHANNEL = 'Reactivate';
+const NAME = '@realDonaldTrump';
+const CHANNEL = 'Random';
 const AVATAR =
-  'https://pbs.twimg.com/profile_images/843603401057488896/z4mbtVKD_bigger.jpg';
+  'https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_400x400.jpg';
 
 export default class App extends React.Component {
   state = {

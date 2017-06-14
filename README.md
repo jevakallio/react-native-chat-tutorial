@@ -1,9 +1,17 @@
 React Native Chat App
 ===
 
+See [App.js](App.js) for the ready app source code, or try it out on Expo:
+https://exp.host/@jevakallio/reactnativechatdemo
+
 **At the Reactivate training? 👋 Jump to [Let's code!](#lets-code)**
 
-## Introduction
+- [Introduction](#introduction) - Start here to learn how to use Create React Native App
+- [Code walkthrough](#code-walkthrough) - Start here if you have created a new Create React Native app but aren't yet familiar with React, ES6 and JSX
+- [Let's code!](#lets-code) - Start here if you understand the basics of React and want to get hacking.
+- [Publish your app!](#publish-your-app) - When you're happy with your app, publish it to Expo.
+
+# Introduction
 
 This tutorial will walk through building a simple real-time chat app with React Native for Android and iOS. Along the way, you'll get to practice React Native basics and learn about tools you can use to build apps.
 
@@ -40,7 +48,7 @@ After dismissing the first use greeting from Expo, you should now see your app o
 
 Expo is embedded into [Create React Native App](https://github.com/react-community/create-react-native-app), the tool we used to generate and launch our project. It's possible to create React Native apps without CRNA (in fact, you'll need to do that if you want to write any custom Java or Swift code to enhance your app - Expo only supports JavaScript), but for learning the basics CRNA is the best choice. For the more manual alternative, see [Getting Started](https://facebook.github.io/react-native/docs/getting-started.html) in React Native docs.
 
-## Code walkthrough
+# Code walkthrough
 
 Okay, let's get started by familiarising ourselves with the anatomy of a React module. (If you are already familiar with React, feel free to move on to [next section](#lets-code).  
 
@@ -673,7 +681,31 @@ In a real app you'll probably want to change the channel. How to do this is left
 - In the `send` function, detect if message is of format "/channel NewChannel", and instead of sending the message to the current chat, extract the channel name from the message.
 - To change the channel title in the header, move the channel name to App component state instead of using the hardcoded `CHANNEL`.
 
+# Publish your app!
 
+Because we've built the app on Expo, you can distribute the app via Expo's `exp` CLI. Let's install that globally on your machine and sign up:
+```sh
+npm install -g exp
+exp register
+```
 
+After filling in your name and email address, you should now have an Expo account. Before we go ahead and publish the app, open your `package.json` and make sure the "name" field is set to something sensible - this will be the display name of your app in the Expo catalogue. Note that it needs to be alphanumeric, and should not contain any spaces.
 
-# Publish it!
+If you don't want your app to be publically visible to other Expo users, you can also set a `"privacy": "unlisted",` field in `package.json`.
+
+Now, all is left to publish the app:
+```sh
+exp publish
+```
+
+If all went well, you should now have a link you can open on your phone and share with anyone (although given that we haven't implemented username selection, all users will appear as you! 😜)
+
+# Resources
+Useful resources:
+- [React Native docs](https://facebook.github.io/react-native/)
+  - [Built-in components](https://facebook.github.io/react-native/docs/components-and-apis.html)
+- [React Native Express](http://www.reactnativeexpress.com/) - A great guide for experienced JavaScripp developers
+- [React (Native) Parts](https://react.parts/native) - React Native components from NPM
+- [React docs](https://facebook.github.io/react/docs/hello-world.html)
+- [Expo docs](https://docs.expo.io/versions/v17.0.0/index.html)
+- [Awesome React Native](https://github.com/jondot/awesome-react-native) - More resources than you will ever have time to read!
