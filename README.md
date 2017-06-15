@@ -217,7 +217,7 @@ import React from 'react';
 + import { StyleSheet, Text, View, FlatList } from 'react-native';
 ```
 
-Then, we can remove the placeholder text in our `render` method with a FlatList:
+Then, we can replace the placeholder text in our `render` method with a FlatList:
 ```diff
   render() {
     return (
