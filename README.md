@@ -236,7 +236,7 @@ We pass FlatList attributes, or [Props](https://facebook.github.io/react-native/
 1. `data={this.state.messages}` - FlatList expects an array of "data" to render, so we give it a list of messages we fetched earlier.
 2. `renderItem={this.renderItem}` - FlatList also needs a callback it can call for each item in the `data` array to render the corresponding row. Here we pass it a method `this.renderItem`.
 
-The renderItem method isn't one of the special lifecycle methods - it's just a plain old method on the class. In fact, it doesn't event yet exist, so let's create it now. Place the renderItem method immediately *above* your component's `render` method:
+The renderItem method isn't one of the special lifecycle methods - it's just a plain old method on the class. In fact, it doesn't even exist yet, so let's create it now. Place the renderItem method immediately *above* your component's `render` method:
 
 ```js
   renderItem({item}) {
