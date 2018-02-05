@@ -4,8 +4,8 @@
   "private": true,
   "devDependencies": {
     "jest-expo": "~1.0.1",
-    "react-native-scripts": "0.0.31",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-native-scripts": "1.11.1",
+    "react-test-renderer": "16.2.0"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -19,10 +19,10 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^17.0.0",
+    "expo": "^25.0.0",
     "firebase": "^4.1.2",
-    "react": "16.0.0-alpha.6",
-    "react-native": "^0.44.0",
+    "react": "16.2.0",
+    "react-native": "^0.52.0",
     "react-native-reversed-flat-list": "^1.0.1",
     "react-native-training-chat-server": "^1.1.0"
   }
