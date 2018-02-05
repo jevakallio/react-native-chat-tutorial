@@ -225,7 +225,11 @@ Then, we can replace the placeholder text in our `render` method with a FlatList
 -        <Text>Open up App.js to start working on your app!</Text>
 -        <Text>Changes you make will automatically reload.</Text>
 -        <Text>Shake your phone to open the developer menu.</Text>
-+        <FlatList data={this.state.messages} renderItem={this.renderItem} />
++        <FlatList 
++          data={this.state.messages} 
++          renderItem={this.renderItem} 
++          inverted
++        />
       </View>
     );
   }
@@ -235,6 +239,7 @@ We pass FlatList attributes, or [Props](https://facebook.github.io/react-native/
 
 1. `data={this.state.messages}` - FlatList expects an array of "data" to render, so we give it a list of messages we fetched earlier.
 2. `renderItem={this.renderItem}` - FlatList also needs a callback it can call for each item in the `data` array to render the corresponding row. Here we pass it a method `this.renderItem`.
+3. `inverted` - This prop will render the list in reverse order, so that latest messages are always anchored to the bottom of the list.
 
 The renderItem method isn't one of the special lifecycle methods - it's just a plain old method on the class. In fact, it doesn't even exist yet, so let's create it now. Place the renderItem method immediately *above* your component's `render` method:
 
@@ -469,35 +474,7 @@ And of course, we'll style the button by adding a "send" style key to the StyleS
   },
 ```
 
-## Step 7: Anchor the list scroll position to the bottom
-
-You probably noticed that the message list starts from the top of the screen and you
-need to scroll to the bottom to see the last messages. Unfortunately the React Native
-FlatList does not offer a "reversed" option - but no worries, there are a third-party
-alternatives.
-
-In this case we can use the `react-native-reversed-flat-list` module. Let's install it
-from NPM by running the following command in the project root directory:
-```sh
-npm install --save react-native-reversed-flat-list
-```
-
-Then we can import it on the top of the file:
-```diff
-import React from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, } from 'react-native';
-+ import ReversedFlatList from 'react-native-reversed-flat-list';
-```
-
-The nice thing about ReversedFlatList is that it's (mostly) a drop-in replacement for the normal FlatList. In our `render` method, we can just replace one component with another:
-```diff
-- <FlatList data={this.state.messages} renderItem={this.renderItem} />
-+ <ReversedFlatList data={this.state.messages} renderItem={this.renderItem} />
-```
-
-This example shows how powerful the React Native third-party ecosystem is. Anybody can write a component, publish it to npm, and other developers can drop them into their apps. You can find good components by googling, or browsing component galleries such as [React Parts](https://react.parts/native)
-
-## Step 8: Add a header
+## Step 7: Add a header
 
 We now have a fully functioning chat app! In fact, you could go ahead and [publish it to the Expo store](#publish-your-app) right now.
 
