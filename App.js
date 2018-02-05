@@ -8,12 +8,10 @@ import {
   KeyboardAvoidingView,
   StatusBar,
   FlatList,
-  Image,
+  Image
 } from 'react-native';
 
-import ReversedFlatList from 'react-native-reversed-flat-list';
-
-import {send, subscribe} from 'react-native-training-chat-server';
+import { send, subscribe } from 'react-native-training-chat-server';
 import Header from './Header';
 
 const NAME = '@realDonaldTrump';
@@ -24,12 +22,12 @@ const AVATAR =
 export default class App extends React.Component {
   state = {
     typing: '',
-    messages: [],
+    messages: []
   };
 
   componentWillMount() {
     subscribe(CHANNEL, messages => {
-      this.setState({messages});
+      this.setState({ messages });
     });
   }
 
@@ -42,19 +40,19 @@ export default class App extends React.Component {
       channel: CHANNEL,
       sender: NAME,
       avatar: AVATAR,
-      message,
+      message
     });
 
     // set the component state (clears text input)
     this.setState({
-      typing: '',
+      typing: ''
     });
   };
 
-  renderItem({item}) {
+  renderItem({ item }) {
     return (
       <View style={styles.row}>
-        <Image style={styles.avatar} source={{uri: item.avatar}} />
+        <Image style={styles.avatar} source={{ uri: item.avatar }} />
         <View style={styles.rowText}>
           <Text style={styles.sender}>{item.sender}</Text>
           <Text style={styles.message}>{item.message}</Text>
@@ -67,9 +65,10 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Header title={CHANNEL} />
-        <ReversedFlatList
+        <FlatList
           data={this.state.messages}
           renderItem={this.renderItem}
+          inverted
         />
         <KeyboardAvoidingView behavior="padding">
           <View style={styles.footer}>
@@ -78,7 +77,7 @@ export default class App extends React.Component {
               style={styles.input}
               underlineColorAndroid="transparent"
               placeholder="Type something nice"
-              onChangeText={text => this.setState({typing: text})}
+              onChangeText={text => this.setState({ typing: text })}
             />
             <TouchableOpacity onPress={this.sendMessage}>
               <Text style={styles.send}>Send</Text>
@@ -93,44 +92,44 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   row: {
     flexDirection: 'row',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#eee'
   },
   avatar: {
     borderRadius: 20,
     width: 40,
     height: 40,
-    marginRight: 10,
+    marginRight: 10
   },
   rowText: {
-    flex: 1,
+    flex: 1
   },
   message: {
-    fontSize: 18,
+    fontSize: 18
   },
   sender: {
     fontWeight: 'bold',
-    paddingRight: 10,
+    paddingRight: 10
   },
   footer: {
     flexDirection: 'row',
-    backgroundColor: '#eee',
+    backgroundColor: '#eee'
   },
   input: {
     paddingHorizontal: 20,
     fontSize: 18,
-    flex: 1,
+    flex: 1
   },
   send: {
     alignSelf: 'center',
     color: 'lightseagreen',
     fontSize: 16,
     fontWeight: 'bold',
-    padding: 20,
-  },
+    padding: 20
+  }
 });
