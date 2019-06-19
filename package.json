@@ -2,27 +2,23 @@
   "name": "ReactNativeChatDemo",
   "version": "0.2.0",
   "private": true,
-  "devDependencies": {
-    "jest-expo": "~1.0.1",
-    "react-native-scripts": "1.11.1",
-    "react-test-renderer": "16.2.0"
-  },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js --watch"
-  },
-  "jest": {
-    "preset": "jest-expo"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^25.0.0",
-    "firebase": "^4.1.2",
-    "react": "16.2.0",
-    "react-native": "^0.52.0",
-    "react-native-training-chat-server": "^2.0.0"
+    "expo": "^33.0.0",
+    "react": "16.8.3",
+    "react-dom": "^16.8.6",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-training-chat-server": "^2.0.0",
+    "react-native-web": "^0.11.4"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^5.1.1"
   }
 }
