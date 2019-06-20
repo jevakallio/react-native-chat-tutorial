@@ -10,7 +10,7 @@ _A step-by-step tutorial to create your own Chat app with React Native_
   - [Code walkthrough](#code-walkthrough) - Start here if you have created a new Create React Native app but aren't yet familiar with React, ES6 and JSX
   - [Let's code!](#lets-code) - Start here if you understand the basics of React and want to get hacking.
   - [Publish your app!](#publish-your-app) - When you're happy with your app, publish it to Expo.
-  
+
 <img src="http://i.imgur.com/KTWAlg4.png" width="300" />
 
 # Introduction
@@ -21,24 +21,32 @@ Work the tutorial at your own pace. The instructions below assume that you are c
 
 ## Set up development environment
 
-We'll build the app from scratch. That means you don't need to clone this repository. Instead install [Create React Native App (CRNA)](https://github.com/react-community/create-react-native-app) from NPM and generate a new project:
+We'll build the app from scratch. That means you don't need to clone this repository. Instead install the [Expo CLI](https://docs.expo.io/versions/latest/workflow/expo-cli/) from NPM and generate a new project:
 ```sh
-npm install -g create-react-native-app
-create-react-native-app MyChatApp
+npm install -g expo-cli
+expo init MyChatApp
+```
+The cli will ask you to choose between a blank template, and one with react-navigation already set up. For this tutorial, choose a blank template.
+
+This will create a new React Native project in a directory `./MyChatApp`.
+
+In order to run the Expo app on your phone, you'll need to create an Expo account and log in. For this, simply go to https://expo.io/signup and sign up for an account.
+
+Then, log in on the cli:
+```sh
+expo login
 ```
 
-This will create a new CRNA project in a directory `./MyChatApp`. Feel free to name your app something else, if you'd like, and run the app with `npm start`:
+Now let's go back to the project we generated, and start it with `npm start`:
 ```sh
 cd MyChatApp
 npm start
 ```
 
-After a while, you should see a message _"To view your app with live reloading, point the Expo app to this QR code"_, and a QR code.
+This will open Expo Developer Tools in your browser. You are now all set to run the app on your phone. Grab your iOS or Android phone and install **Expo**
+([iOS App Store](https://itunes.apple.com/app/apple-store/id982107779?mt=8) | [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)), and log in with your newly created Expo account. It will appear in the Projects tab, under "Recently in development".
 
-Let's do as the instructions suggest. Grab your iOS or Android phone and install the **Expo**
-([iOS App Store](https://itunes.apple.com/app/apple-store/id982107779?mt=8) | [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)) app on it, launch the app and scan the QR code.
-
-**Note**: For the phone to find the local server, **both devices need to be on the same local network.** This means either connected to the same WiFi, or the laptop's internet tethered via the phone's internet sharing functionality.
+**Note**: For your phone to find the local server, **both devices need to be on the same local network.** This means either connected to the same WiFi, or the laptop's internet tethered via the phone's internet sharing functionality.
 
 After dismissing the first use greeting from Expo, you should now see your app on your phone.
 
@@ -48,11 +56,11 @@ After dismissing the first use greeting from Expo, you should now see your app o
 
 [Expo](https://expo.io/) lets web developers build truly native apps that work across both iOS and Android by writing them once in just JavaScript. It's open source, free and uses React Native.
 
-Expo is embedded into [Create React Native App](https://github.com/react-community/create-react-native-app), the tool we used to generate and launch our project. It's possible to create React Native apps without CRNA (in fact, you'll need to do that if you want to write any custom Java or Swift code to enhance your app - Expo only supports JavaScript), but for learning the basics CRNA is the best choice. For the more manual alternative, see [Getting Started](https://facebook.github.io/react-native/docs/getting-started.html) in React Native docs.
+It's possible to create React Native apps without Expo (in fact, you'll need to do that if you want to write any custom Java or Swift code to enhance your app - Expo only supports JavaScript), but for learning the basics Expo is the best choice. For the more manual alternative, see [Getting Started](https://facebook.github.io/react-native/docs/getting-started.html) in React Native docs.
 
 # Code walkthrough
 
-Okay, let's get started by familiarising ourselves with the anatomy of a React module. (If you are already familiar with React, feel free to move on to [next section](#lets-code).  
+Okay, let's get started by familiarising ourselves with the anatomy of a React module. (If you are already familiar with React, feel free to move on to [next section](#lets-code).
 
 Open the directory in your favorite IDE or text editor: [Atom](https://atom.io/), [VS Code](https://code.visualstudio.com/), [Sublime Text](https://www.sublimetext.com/), Vim, Emacs, WebStorm... anything will do.
 
@@ -225,9 +233,9 @@ Then, we can replace the placeholder text in our `render` method with a FlatList
 -        <Text>Open up App.js to start working on your app!</Text>
 -        <Text>Changes you make will automatically reload.</Text>
 -        <Text>Shake your phone to open the developer menu.</Text>
-+        <FlatList 
-+          data={this.state.messages} 
-+          renderItem={this.renderItem} 
++        <FlatList
++          data={this.state.messages}
++          renderItem={this.renderItem}
 +          inverted
 +        />
       </View>
@@ -478,7 +486,7 @@ And of course, we'll style the button by adding a "send" style key to the StyleS
 
 We now have a fully functioning chat app! In fact, you could go ahead and [publish it to the Expo store](#publish-your-app) right now.
 
-But it doesn't look very nice yet. Let's add a header component and a bit of color. 
+But it doesn't look very nice yet. Let's add a header component and a bit of color.
 
 We could just keep editing `App.js`, but the file is already getting quite big, and a header feels like a good, isolated component to split out to it's own file.
 
@@ -524,7 +532,7 @@ import Header from './Header';
 ```
 
 Then you can just drop in the Header component above the list and pass the channel name as the `title` prop. You should now see a Header on the screen!
-```diff  
+```diff
   render() {
     return (
       <View style={styles.container}>
