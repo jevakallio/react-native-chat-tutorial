@@ -37,7 +37,7 @@ Then, log in on the cli:
 expo login
 ```
 
-Now lets go back to the project we generated an start it with `npm start`:
+Now let's go back to the project we generated, and start it with `npm start`:
 ```sh
 cd MyChatApp
 npm start
