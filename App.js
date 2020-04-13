@@ -70,7 +70,7 @@ export default class App extends React.Component {
           renderItem={this.renderItem}
           inverted
         />
-        <KeyboardAvoidingView behavior="padding">
+        <KeyboardAvoidingView behavior='padding'{Platform.select({ android: null, ios: '' })}>
           <View style={styles.footer}>
             <TextInput
               value={this.state.typing}
